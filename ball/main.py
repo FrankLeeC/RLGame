@@ -186,7 +186,9 @@ def update_policy(state, action):
 def run():
     global COUNT, Q
     count = 1000000
-    for _ in range(count):
+    for i in range(count):
+        if (i + 1) % 1000 == 0:
+            print('current:', (i + 1))
         episode = generate_episode()
         l = len(episode.states())
         g = 0.0
