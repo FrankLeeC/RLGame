@@ -190,7 +190,7 @@ def update_policy(state):
 
 def run():
     global COUNT, Q
-    count = 5000000
+    count = 10000000
     for idx in range(count):
         if (idx + 1) % 1000 == 0:
             print('current:', (idx + 1))
