@@ -40,6 +40,7 @@ class State:
     def __init__(self, l):
         self.l = l
         self.p = 0
+        self.__sort()
 
     def get(self, idx):
         if idx < len(self.l):
@@ -49,12 +50,15 @@ class State:
     def set_point(self, p):
         self.p = p
 
+    def __sort(self):
+        self.l = sorted(self.l)
+
     def point(self):
         return self.p
 
 def get_action(state):
     global POLICY
-    return np.argmax(POLICY[state.get(0)][state.get(1)][state.get(2)][state.get(3)][state.get(4)]) - 1  # {-1, 0, 1}
+    return np.argmax(POLICY[state.get(0)][state.get(1)][state.get(2)][state.get(3)]) - 1  # {-1, 0, 1}
 
 def next_state(e):
     '''
@@ -201,13 +205,21 @@ def run():
             g = 0.9 * g + rewards[i]
             s = states[i]
             a, b, c, d, e = s.get(0), s.get(1), s.get(2), s.get(3), s.get(4)
-            key = '%d_%d_%d_%d_%d' % (a, b, c, d, e)
+            key = '%d_%d_%d_%d_%d_%d' % (a, b, c, d, e, _a)
             if key not in cache:
                 cache.add(key)
                 COUNT[a][b][c][d][e][_a] += 1
                 Q[a][b][c][d][e][_a] += (g - Q[a][b][c][d][e][_a]) / COUNT[a][b][c][d][e][_a]
                 update_policy(s)
 
+
+def valid(a, b, c, d, e):
+    if a == b or a == c or a == d or b == c or b == d or c == d:
+        return False
+    e = e + 20
+    if a == e or b == e or c == e or d == e:
+        return False
+    return True
 
 def save():
     global POLICY
@@ -217,8 +229,10 @@ def save():
                 for c in range(25):
                     for d in range(25):
                         for e in range(5):
-                            _a = np.argmax(POLICY[a][b][c][d][e]) - 1
-                            f.write('%d %d %d %d %d     %d\n' % (a, b, c, d, e, _a))
+                            if valid(a, b, c, d, e):
+                                l = sorted([a, b, c, d])
+                                _a = np.argmax(POLICY[l[0]][l[1]][l[2]][l[3]][e]) - 1
+                                f.write('%d %d %d %d %d     %d\n' % (l[0], l[1], l[2], l[3], e, _a))
                         f.flush()
 
 if __name__ == "__main__":
