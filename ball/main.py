@@ -54,7 +54,7 @@ class State:
 
 def get_action(state):
     global POLICY
-    return np.argmax(POLICY[state.a][state.b][state.c][state.d][state.e]) - 1  # {-1, 0, 1}
+    return np.argmax(POLICY[state.get(0)][state.get(1)][state.get(2)][state.get(3)][state.get(4)]) - 1  # {-1, 0, 1}
 
 def next_state(e):
     '''
@@ -163,7 +163,7 @@ def generate_episode():
     '''
     episode = Episode()
     state = random_start()
-    end = is_end(state)
+    end, _ = is_end(state)
     while not end:
         action = get_action(state)
         episode.add_state(state)
@@ -173,22 +173,21 @@ def generate_episode():
     return episode
 
 
-def update_policy(state, action):
+def update_policy(state):
     global POLICY
-    p = POLICY[state.get(0)][state.get(1)][state.get(2)][state.get(3)][state.get(4)]
-    if np.argmax(p) - 1 != action:
-        POLICY[state.get(0)][state.get(1)][state.get(2)][state.get(3)][state.get(4)][0] = 0.0
-        POLICY[state.get(0)][state.get(1)][state.get(2)][state.get(3)][state.get(4)][1] = 0.0
-        POLICY[state.get(0)][state.get(1)][state.get(2)][state.get(3)][state.get(4)][2] = 0.0
-        POLICY[state.get(0)][state.get(1)][state.get(2)][state.get(3)][state.get(4)][action + 1] = 1.0
+    POLICY[state.get(0)][state.get(1)][state.get(2)][state.get(3)][state.get(4)][0] = 0.0
+    POLICY[state.get(0)][state.get(1)][state.get(2)][state.get(3)][state.get(4)][1] = 0.0
+    POLICY[state.get(0)][state.get(1)][state.get(2)][state.get(3)][state.get(4)][2] = 0.0
+    a = np.argmax(Q[state.get(0)][state.get(1)][state.get(2)][state.get(3)][state.get(4)])
+    POLICY[state.get(0)][state.get(1)][state.get(2)][state.get(3)][state.get(4)][a] = 1.0
 
 
 def run():
     global COUNT, Q
-    count = 1000000
-    for i in range(count):
-        if (i + 1) % 1000 == 0:
-            print('current:', (i + 1))
+    count = 5000000
+    for idx in range(count):
+        if (idx + 1) % 1000 == 0:
+            print('current:', (idx + 1))
         episode = generate_episode()
         l = len(episode.states())
         g = 0.0
@@ -206,7 +205,7 @@ def run():
                 cache.add(key)
                 COUNT[a][b][c][d][e][_a] += 1
                 Q[a][b][c][d][e][_a] += (rewards[i] - Q[a][b][c][d][e][_a]) / COUNT[a][b][c][d][e][_a]
-                update_policy(s, _a)
+                update_policy(s)
 
 
 def save():
