@@ -184,7 +184,7 @@ def update_policy(state):
 
 def run():
     global COUNT, Q
-    count = 5000000
+    count = 1000000
     for idx in range(count):
         if (idx + 1) % 1000 == 0:
             print('current:', (idx + 1))
@@ -205,7 +205,7 @@ def run():
             if key not in cache:
                 cache.add(key)
                 COUNT[a][b][c][d][e][_a] += 1
-                Q[a][b][c][d][e][_a] += (rewards[i] - Q[a][b][c][d][e][_a]) / COUNT[a][b][c][d][e][_a]
+                Q[a][b][c][d][e][_a] += (g - Q[a][b][c][d][e][_a]) / COUNT[a][b][c][d][e][_a]
                 update_policy(s)
 
 
