@@ -195,7 +195,8 @@ def run():
         actions = episode.action()
         rewards = episode.reward()
         cache = set()
-        for i in range(l):
+        for j in range(l):
+            i = l - j - 1
             _a = actions[i]
             g = 0.9 * g + rewards[i]
             s = states[i]
