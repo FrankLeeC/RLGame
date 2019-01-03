@@ -58,17 +58,12 @@ func read() *[9][9][3]int {
 }
 
 func randExcept(a int) int {
-	r := rand.Intn(2)
-	if a == 0 {
-		return r + 1
+	for {
+		r := rand.Intn(6)
+		if r != a {
+			return r
+		}
 	}
-	if a == 2 {
-		return r
-	}
-	if r == 1 {
-		return 2
-	}
-	return 0
 }
 
 func randomStart() *[3]int {
