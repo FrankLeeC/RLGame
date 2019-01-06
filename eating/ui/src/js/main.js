@@ -13,7 +13,7 @@ let left = (window.innerWidth - border) / 2
 let runSpeed = 20
 let drawSpeed = 5
 
-let canvas = document.getElementById('game')
+let canvas = document.createElement('canvas')
 canvas.width = border
 canvas.height = border
 let ctx   = canvas.getContext('2d')
@@ -21,6 +21,7 @@ let ctx   = canvas.getContext('2d')
 canvas.style.position = 'fixed'
 canvas.style.left = left + 'px'
 canvas.style.top = top + 'px'
+document.body.appendChild(canvas)
 
 var labyrinthCanvas = document.createElement('canvas')
 labyrinthCanvas.width = window.innerWidth
@@ -29,7 +30,7 @@ var lctx = labyrinthCanvas.getContext('2d')
 
 var pointWidth = parseInt(window.innerWidth / 5)
 var pointHeight = parseInt(window.innerHeight / 24)
-var pointCanvas = document.getElementById('point')
+var pointCanvas = document.createElement('canvas')
 pointCanvas.width = pointWidth
 pointCanvas.height = pointHeight
 var pctx = pointCanvas.getContext('2d')
@@ -38,6 +39,8 @@ var ptop = parseInt(window.innerHeight / 6)
 pointCanvas.style.position = 'fixed'
 pointCanvas.style.top = ptop + 'px'
 pointCanvas.style.left = pleft + 'px'
+document.body.appendChild(pointCanvas)
+
 
 
 var bufferedPointCanvas = document.createElement('canvas')
@@ -50,16 +53,27 @@ targetCanvas.width = border
 targetCanvas.height = border
 var tctx = targetCanvas.getContext('2d')
 
-var aiTargetImg = document.getElementById('img_bean_ai')
-var playerTargetImg = document.getElementById('img_bean_player')
-var aiImg0 = document.getElementById('img_eater_ai_up')
-var aiImg1 = document.getElementById('img_eater_ai_right')
-var aiImg2 = document.getElementById('img_eater_ai_down')
-var aiImg3 = document.getElementById('img_eater_ai_left')
-var playerImg0 = document.getElementById('img_eater_player_up')
-var playerImg1 = document.getElementById('img_eater_player_right')
-var playerImg2 = document.getElementById('img_eater_player_down')
-var playerImg3 = document.getElementById('img_eater_player_left')
+var aiTargetImg = new Image()
+aiTargetImg.src = 'https://eater.liwanyi.me/static/images/bean_ai.png'
+var playerTargetImg = new Image()
+playerTargetImg.src = 'https://eater.liwanyi.me/static/images/bean_player.png'
+var aiImg0 = new Image()
+aiImg0.src = 'https://eater.liwanyi.me/static/images/eater_ai_up.png'
+var aiImg1 = new Image()
+aiImg1.src = 'https://eater.liwanyi.me/static/images/eater_ai_right.png'
+var aiImg2 = new Image()
+aiImg2.src = 'https://eater.liwanyi.me/static/images/eater_ai_down.png'
+var aiImg3 = new Image()
+aiImg3.src = 'https://eater.liwanyi.me/static/images/eater_ai_left.png'
+var playerImg0 = new Image()
+playerImg0.src = 'https://eater.liwanyi.me/static/images/eater_player_up.png'
+var playerImg1 = new Image()
+playerImg1.src = 'https://eater.liwanyi.me/static/images/eater_player_right.png'
+var playerImg2 = new Image()
+playerImg2.src = 'https://eater.liwanyi.me/static/images/eater_player_down.png'
+var playerImg3 = new Image()
+playerImg3.src = 'https://eater.liwanyi.me/static/images/eater_player_left.png'
+
 
 /**
  * 游戏主函数
