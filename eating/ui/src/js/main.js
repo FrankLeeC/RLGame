@@ -14,38 +14,40 @@ let runSpeed = 20
 let drawSpeed = 5
 
 let canvas = document.getElementById('game')
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
-// canvas.width = border
-// canvas.height = border
+canvas.width = border
+canvas.height = border
 let ctx   = canvas.getContext('2d')
 
-canvas.style.left = left
-canvas.style.top = top
+canvas.style.position = 'fixed'
+canvas.style.left = left + 'px'
+canvas.style.top = top + 'px'
 
 var labyrinthCanvas = document.createElement('canvas')
 labyrinthCanvas.width = window.innerWidth
 labyrinthCanvas.height = window.innerHeight
 var lctx = labyrinthCanvas.getContext('2d')
 
-var pointCanvas = document.createElement('canvas')
-pointCanvas.width = window.innerWidth
-pointCanvas.height = window.innerHeight
-// pointCanvas.width = parseInt(window.innerWidth / 5)
-// pointCanvas.height = parseInt(window.innerHeight / 24)
-var pctx = pointCanvas.getContext('2d')
-var pointWidth = parseInt(window.innerWidth / 3)
+var pointWidth = parseInt(window.innerWidth / 5)
 var pointHeight = parseInt(window.innerHeight / 24)
-var pleft = pointWidth
+var pointCanvas = document.getElementById('point')
+pointCanvas.width = pointWidth
+pointCanvas.height = pointHeight
+var pctx = pointCanvas.getContext('2d')
+var pleft = pointCanvas.width * 2
 var ptop = parseInt(window.innerHeight / 6)
-// var pleft = pointCanvas.width * 2
-// var ptop = parseInt(window.innerHeight / 6)
+pointCanvas.style.position = 'fixed'
+pointCanvas.style.top = ptop + 'px'
+pointCanvas.style.left = pleft + 'px'
+
+
+var bufferedPointCanvas = document.createElement('canvas')
+var bpctx = bufferedPointCanvas.getContext('2d')
+bufferedPointCanvas.width = pointWidth
+bufferedPointCanvas.height = pointHeight
 
 var targetCanvas = document.createElement('canvas')
-targetCanvas.width = window.innerWidth
-targetCanvas.height = window.innerHeight
-// targetCanvas.width = border
-// targetCanvas.height = border
+targetCanvas.width = border
+targetCanvas.height = border
 var tctx = targetCanvas.getContext('2d')
 
 var aiTargetImg = document.getElementById('img_bean_ai')
@@ -106,7 +108,7 @@ export default class Main {
   }
 
   initLabyrinth() {
-    ctx.lineWidth = black / 2
+    lctx.lineWidth = black / 2
 
     this.setBackground()
     this.drawBorder()
@@ -115,21 +117,21 @@ export default class Main {
 
   drawLine(arr) {
     var start = arr[0]
-    var a = start[0] * pair + left
+    var a = start[0] * pair
     if (start[0] == 10) {
       a += black
     }
-    var b = start[1] * pair + top
+    var b = start[1] * pair
     if (start[1] == 10) {
       b += black
     }
     lctx.moveTo(a, b)
     for(var i = 1; i < arr.length; i++) {
-      var a = arr[i][0] * pair + left
+      var a = arr[i][0] * pair
       if (arr[i][0] == 10) {
         a += black
       }
-      var b = arr[i][1] * pair + top
+      var b = arr[i][1] * pair
       if (arr[i][1] == 10) {
         b += black
       }
@@ -165,7 +167,7 @@ export default class Main {
 
   drawBorder() {
     lctx.strokeStyle = 'black'
-    lctx.strokeRect(left, top, border, border)
+    lctx.strokeRect(0, 0, border, border)
   }
 
   /**
@@ -187,8 +189,8 @@ export default class Main {
     var d = 20
     var x = databus.aiTarget % 10
     var y = parseInt(databus.aiTarget / 10)
-    var l = (x + 1) * black + x * white + left
-    var t = (y + 1) * black + y * white + top
+    var l = (x + 1) * black + x * white
+    var t = (y + 1) * black + y * white
 
     tctx.clearRect(l, t, d, d)
   }
@@ -197,8 +199,9 @@ export default class Main {
     var d = 20
     var x = databus.playerTarget % 10
     var y = parseInt(databus.playerTarget / 10)
-    var l = (x + 1) * black + x * white + left
-    var t = (y + 1) * black + y * white + top
+    var l = (x + 1) * black + x * white
+    var t = (y + 1) * black + y * white
+    
 
     tctx.clearRect(l, t, d, d)
   }
@@ -207,8 +210,8 @@ export default class Main {
     var aiTarget = databus.aiTarget
     var tx = aiTarget % 10
     var ty = parseInt(aiTarget / 10)
-    var tl = (tx + 1) * black + tx * white + left
-    var tt = (ty + 1) * black + ty * white + top
+    var tl = (tx + 1) * black + tx * white
+    var tt = (ty + 1) * black + ty * white
 
     tctx.drawImage(aiTargetImg, tl, tt)
     ctx.drawImage(targetCanvas, 0, 0)
@@ -218,8 +221,8 @@ export default class Main {
     var playerTarget = databus.playerTarget
     var tx = playerTarget % 10
     var ty = parseInt(playerTarget / 10)
-    var tl = (tx + 1) * black + tx * white + left
-    var tt = (ty + 1) * black + ty * white + top
+    var tl = (tx + 1) * black + tx * white
+    var tt = (ty + 1) * black + ty * white
 
     tctx.drawImage(playerTargetImg, tl, tt)
     ctx.drawImage(targetCanvas, 0, 0)
@@ -241,8 +244,8 @@ export default class Main {
     var nextState = databus.aiState
     var x = nextState % 10
     var y = parseInt(nextState / 10)
-    var l = (x + 1) * black + x * white + left
-    var t = (y + 1) * black + y * white + top
+    var l = (x + 1) * black + x * white
+    var t = (y + 1) * black + y * white
 
     if (databus.aiAction === 0) {
       tctx.drawImage(aiImg0, l, t)
@@ -266,8 +269,8 @@ export default class Main {
     var nextState = databus.playerState
     var x = nextState % 10
     var y = parseInt(nextState / 10)
-    var l = (x + 1) * black + x * white + left
-    var t = (y + 1) * black + y * white + top
+    var l = (x + 1) * black + x * white
+    var t = (y + 1) * black + y * white
 
     if (action === 0) {
       tctx.drawImage(playerImg0, l, t)
@@ -282,24 +285,25 @@ export default class Main {
   }
 
   drawPoint() {
+    pctx.clearRect(0, 0, pointCanvas.width, pointCanvas.height)
     if (databus.shouldDrawPoint()) {
-      pctx.clearRect(0, 0, pointCanvas.width, pointCanvas.height)
+      
+      bpctx.clearRect(0, 0, bufferedPointCanvas.width, bufferedPointCanvas.height)
 
       var rate = databus.getPointRate()
-      var start = pleft + pointWidth * (rate - 0.05)
-      var end = pleft + pointWidth * (rate + 0.05)
+      var start = pointWidth * (rate - 0.05)
+      var end = pointWidth * (rate + 0.05)
       var pgrd = pctx.createLinearGradient(start, 0, end, 0)
 
       pgrd.addColorStop(0, "red");
       pgrd.addColorStop(1, "blue");
 
-      pctx.fillStyle = pgrd;
-      pctx.fillRect(pleft, ptop, pointWidth, pointHeight);
+      bpctx.fillStyle = pgrd;
+      bpctx.fillRect(0, 0, pointWidth, pointHeight);
 
       databus.resetLastRate()
     }
-    
-    ctx.drawImage(pointCanvas, 0, 0)
+    pctx.drawImage(bufferedPointCanvas, 0, 0)
   }
 
   clearAll() {
