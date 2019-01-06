@@ -3,8 +3,8 @@ import DataBus    from './databus'
 
 let databus = new DataBus()
 
-const white = 24
-const black = 4
+const white = 36
+const black = 6
 const pair = white + black
 const border = 10 * white + 11 * black
 let top = parseInt(window.innerHeight / 4)
