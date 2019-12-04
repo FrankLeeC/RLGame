@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "vue": "^2.5.21",
     "webpack": "^4.28.3"
   },
