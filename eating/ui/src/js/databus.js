@@ -5,6 +5,8 @@ let instance
 let policy = new Map()
 let transition = new Map()
 
+let base = "http://localhost:9091"
+
 /**
  * 全局状态管理器
  */
@@ -46,7 +48,7 @@ export default class DataBus {
 
   initPolicy() {
     var that = this
-    axios.get('https://eater.liwanyi.me/policy')
+    axios.get(base + '/policy')
       .then(function (res) {
         for (var k in res.data) {
           var v = res.data[k]
@@ -65,7 +67,7 @@ export default class DataBus {
 
   initTransition() {
     var that = this
-    axios.get('https://eater.liwanyi.me/transition')
+    axios.get(base + '/transition')
       .then(function (res) {
         for (var k in res.data) {
           var v = res.data[k]

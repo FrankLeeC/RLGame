@@ -1,5 +1,6 @@
 import DataBus    from './databus'
 
+let base = "http://localhost:9091"
 
 let databus = new DataBus()
 
@@ -54,25 +55,25 @@ targetCanvas.height = border
 var tctx = targetCanvas.getContext('2d')
 
 var aiTargetImg = new Image()
-aiTargetImg.src = 'https://eater.liwanyi.me/static/images/bean_ai.png'
+aiTargetImg.src = base + '/static/images/bean_ai.png'
 var playerTargetImg = new Image()
-playerTargetImg.src = 'https://eater.liwanyi.me/static/images/bean_player.png'
+playerTargetImg.src = base + '/static/images/bean_player.png'
 var aiImg0 = new Image()
-aiImg0.src = 'https://eater.liwanyi.me/static/images/eater_ai_up.png'
+aiImg0.src = base + '/static/images/eater_ai_up.png'
 var aiImg1 = new Image()
-aiImg1.src = 'https://eater.liwanyi.me/static/images/eater_ai_right.png'
+aiImg1.src = base + '/static/images/eater_ai_right.png'
 var aiImg2 = new Image()
-aiImg2.src = 'https://eater.liwanyi.me/static/images/eater_ai_down.png'
+aiImg2.src = base + '/static/images/eater_ai_down.png'
 var aiImg3 = new Image()
-aiImg3.src = 'https://eater.liwanyi.me/static/images/eater_ai_left.png'
+aiImg3.src = base + '/static/images/eater_ai_left.png'
 var playerImg0 = new Image()
-playerImg0.src = 'https://eater.liwanyi.me/static/images/eater_player_up.png'
+playerImg0.src = base + '/static/images/eater_player_up.png'
 var playerImg1 = new Image()
-playerImg1.src = 'https://eater.liwanyi.me/static/images/eater_player_right.png'
+playerImg1.src = base + '/static/images/eater_player_right.png'
 var playerImg2 = new Image()
-playerImg2.src = 'https://eater.liwanyi.me/static/images/eater_player_down.png'
+playerImg2.src = base + '/static/images/eater_player_down.png'
 var playerImg3 = new Image()
-playerImg3.src = 'https://eater.liwanyi.me/static/images/eater_player_left.png'
+playerImg3.src = base + '/static/images/eater_player_left.png'
 
 
 /**
